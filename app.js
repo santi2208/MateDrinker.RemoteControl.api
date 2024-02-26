@@ -24,7 +24,6 @@ app.post('/command', (req, res) => {
     }
 
     // Guarda el objeto en la base de datos
-    
     storage.setItem(clave, valor)
     .then(() => {
     console.log('Item guardado correctamente.');
@@ -52,6 +51,41 @@ app.get('/command/:clave', (req, res) => {
         return res.status(200).json({ clave, valor });
     });
   });
+
+  app.get('/commands/unprocessed', (req, res) => {
+    let valores = []
+    db_response = storage.values().then(valor => { 
+        console.log("----Getting------")
+        console.log("VALOR:" + valor.toString())
+        // console.log("CLAVE:" + clave.toString())
+        valores.push(valor)
+    });
+    db_response.then(d => {
+      valores_ordenados = valores.sort((a, b) => a.id - b.id);
+      return res.status(200).json({ "commands": valores_ordenados });
+    })
+  });
+
+  // app.delete('/commands/:clave', (req, res) => {
+  //   const clave = req.params.clave;
+
+  //   // Verificar si la clave existe antes de intentar eliminar
+  //   const existeClave = storage.keys().includes(clave);
+  
+  //   if (existeClave) {
+  //     // Eliminar el elemento por clave
+  //     storage.removeItemSync(clave);
+  //     res.send(`Elemento con clave ${clave} eliminado.`);
+  //   } else {
+  //     res.status(404).send(`Elemento con clave ${clave} no encontrado.`);
+  //   }
+  // })
+
+  app.delete('/commands/clear', (req, res) => {
+    storage.clear();
+    res.send('Todos los elementos eliminados.')
+  })
+
 
 // Inicia el servidor
 app.listen(PORT, () => {
