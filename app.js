@@ -15,16 +15,14 @@ app.use(express.json());
 app.post('/command', (req, res) => {
   try {
     // Verifica que el cuerpo de la solicitud tiene las propiedades requeridas
-    const { clave, valor } = req.body;
-    console.log("----Posting------")
-    console.log("CLAVE:" + clave.toString())
-    console.log("VALOR:" + valor.toString()) 
-    if (!clave || !valor) {
+    const { key, value } = req.body;
+    
+    if (!key || !value) {
       return res.status(400).json({ error: 'Se requieren las propiedades "clave" y "valor" en el cuerpo de la solicitud.' });
     }
 
     // Guarda el objeto en la base de datos
-    storage.setItem(clave, valor)
+    storage.setItem(key, value)
     .then(() => {
     console.log('Item guardado correctamente.');
     })
@@ -51,24 +49,20 @@ app.get('/command/:clave', (req, res) => {
 
   app.get('/commands/unprocessed', (req, res) => {
     let valores = []
-    db_response = storage.values().then(valor => { 
+    storage.values().then(valor => { 
         valores.push(valor)
-    });
-    db_response.then(d => {
+    }).then(d => {
       valores_ordenados = valores.sort((a, b) => a.id - b.id);
       return res.status(200).json({ "commands": valores_ordenados });
-    })
+    }).then(d => {storage.clear()})
   });
 
   app.delete('/command/:clave', (req, res) => {
     const clave = req.params.clave;
-
-    // Verificar si la clave existe antes de intentar eliminar
     
     storage.keys().then(keys =>{
       let existeClave = keys.includes(clave)
       if (existeClave) {
-        // Eliminar el elemento por clave
         storage.removeItem(clave);
         res.send(`Elemento con clave ${clave} eliminado.`);
       } else {
