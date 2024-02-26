@@ -42,9 +42,6 @@ app.post('/command', (req, res) => {
 app.get('/command/:clave', (req, res) => {
     const clave = req.params.clave.toString();
     const valor =  storage.getItem(clave).then(valor => { 
-        console.log("----Getting------")
-        console.log("CLAVE:" + clave.toString())
-        console.log("VALOR:" + valor.toString())
         if (valor === undefined) {
           return res.status(404).json({ error: 'Objeto no encontrado.' });
         }
@@ -55,9 +52,6 @@ app.get('/command/:clave', (req, res) => {
   app.get('/commands/unprocessed', (req, res) => {
     let valores = []
     db_response = storage.values().then(valor => { 
-        console.log("----Getting------")
-        console.log("VALOR:" + valor.toString())
-        // console.log("CLAVE:" + clave.toString())
         valores.push(valor)
     });
     db_response.then(d => {
@@ -66,20 +60,22 @@ app.get('/command/:clave', (req, res) => {
     })
   });
 
-  // app.delete('/commands/:clave', (req, res) => {
-  //   const clave = req.params.clave;
+  app.delete('/commands/:clave', (req, res) => {
+    const clave = req.params.clave;
 
-  //   // Verificar si la clave existe antes de intentar eliminar
-  //   const existeClave = storage.keys().includes(clave);
-  
-  //   if (existeClave) {
-  //     // Eliminar el elemento por clave
-  //     storage.removeItemSync(clave);
-  //     res.send(`Elemento con clave ${clave} eliminado.`);
-  //   } else {
-  //     res.status(404).send(`Elemento con clave ${clave} no encontrado.`);
-  //   }
-  // })
+    // Verificar si la clave existe antes de intentar eliminar
+    
+    storage.keys().then(keys =>{
+      let existeClave = keys.includes(clave)
+      if (existeClave) {
+        // Eliminar el elemento por clave
+        storage.removeItem(clave);
+        res.send(`Elemento con clave ${clave} eliminado.`);
+      } else {
+        res.status(404).send(`Elemento con clave ${clave} no encontrado.`);
+      }
+    })
+  })
 
   app.delete('/commands/clear', (req, res) => {
     storage.clear();
