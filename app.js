@@ -60,7 +60,7 @@ app.get('/command/:clave', (req, res) => {
     })
   });
 
-  app.delete('/commands/:clave', (req, res) => {
+  app.delete('/command/:clave', (req, res) => {
     const clave = req.params.clave;
 
     // Verificar si la clave existe antes de intentar eliminar
@@ -84,6 +84,6 @@ app.get('/command/:clave', (req, res) => {
 
 
 // Inicia el servidor
-app.listen(PORT, () => {
+app.listen(PORT, '0.0.0.0', () => {
   console.log(`Servidor escuchando en http://localhost:${PORT}`);
 });
