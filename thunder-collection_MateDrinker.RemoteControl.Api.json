@@ -1,0 +1,89 @@
+{
+    "client": "Thunder Client",
+    "collectionName": "MateDrinker.RemoteControl.Api",
+    "dateExported": "2024-02-26T12:58:06.849Z",
+    "version": "1.1",
+    "folders": [],
+    "requests": [
+        {
+            "_id": "3a89a416-a7f5-4095-91a1-8f30cb6117c8",
+            "colId": "af682f9b-760f-4132-b868-520e7c73880a",
+            "containerId": "",
+            "name": "Create Command",
+            "url": "command/",
+            "method": "POST",
+            "sortNum": 10000,
+            "created": "2024-02-24T05:29:29.126Z",
+            "modified": "2024-02-26T12:57:13.030Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"clave\": \"4\",\n  \"valor\": {\n    \"id\": 4,\n    \"command\": \"RIGHT\",\n    \"time_created\": \"2024-02-26T12:30:52\"\n  }\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "5623fac2-386d-4599-b349-29e276d2867d",
+            "colId": "af682f9b-760f-4132-b868-520e7c73880a",
+            "containerId": "",
+            "name": "Get Command by Id",
+            "url": "command/4",
+            "method": "GET",
+            "sortNum": 20000,
+            "created": "2024-02-24T05:31:19.132Z",
+            "modified": "2024-02-26T12:56:54.965Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "24a5161e-be7b-4fb5-9f3a-2a68dec89920",
+            "colId": "af682f9b-760f-4132-b868-520e7c73880a",
+            "containerId": "",
+            "name": "Get Unprocessed",
+            "url": "commands/unprocessed",
+            "method": "GET",
+            "sortNum": 30000,
+            "created": "2024-02-26T02:21:41.718Z",
+            "modified": "2024-02-26T12:56:20.546Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "3646dbce-28e6-4db6-8e34-8a6e521249da",
+            "colId": "af682f9b-760f-4132-b868-520e7c73880a",
+            "containerId": "",
+            "name": "Clear DB",
+            "url": "commands/clear",
+            "method": "DELETE",
+            "sortNum": 40000,
+            "created": "2024-02-26T03:09:46.896Z",
+            "modified": "2024-02-26T12:56:46.216Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "985a760c-eb23-47f3-bebf-4998ee090f11",
+            "colId": "af682f9b-760f-4132-b868-520e7c73880a",
+            "containerId": "",
+            "name": "Delete Element",
+            "url": "commands/4",
+            "method": "DELETE",
+            "sortNum": 50000,
+            "created": "2024-02-26T12:43:45.282Z",
+            "modified": "2024-02-26T12:56:33.258Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        }
+    ],
+    "settings": {
+        "options": {
+            "baseUrl": "http://localhost:3000/"
+        }
+    }
+}
