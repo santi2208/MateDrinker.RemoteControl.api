@@ -1,83 +1,69 @@
+require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
-const storage = require('node-persist');
+const Redis = require('ioredis');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+const REDIS_TTL = 100;
 
-// Inicializa la base de datos
-storage.init();
+const redis = new Redis({
+  host: process.env.REDIS_HOST,
+  port: process.env.REDIS_PORT,
+  password: process.env.REDIS_PASSWORD,
+})
 
-// Middleware para parsear el cuerpo de las peticiones en formato JSON
-app.use(express.json());
+// Middleware para parsear el cuerpo de las solicitudes
+app.use(bodyParser.json());
 
-// Ruta para el método POST
-app.post('/command', (req, res) => {
+app.get('/commands/:user_id', async (req, res) => {
+  const key = req.params.user_id;
+
   try {
-    // Verifica que el cuerpo de la solicitud tiene las propiedades requeridas
-    const { key, value } = req.body;
-    
-    if (!key || !value) {
-      return res.status(400).json({ error: 'Se requieren las propiedades "clave" y "valor" en el cuerpo de la solicitud.' });
-    }
-
-    // Guarda el objeto en la base de datos
-    storage.setItem(key, value)
-    .then(() => {
-    console.log('Item guardado correctamente.');
+    redis.zrange(key, 0, -1, (error, values) => {
+      if (error) {
+        console.log(error)
+        res.status(500).json({ error: 'Error al obtener el registro de Redis' });
+      }
+      if(values.length > 0){
+        console.log("Eliminando registros")
+        redis.del(key);
+      }
+      
+      res.json(values);
+      console.log(values)
     })
-    .catch((error) => {
-    console.error('Error al guardar el item:', error);
-    });
 
-    return res.status(200).json({ mensaje: 'Objeto guardado correctamente.' });
   } catch (error) {
-    console.error('Error al procesar la solicitud:', error);
-    return res.status(500).json({ error: 'Error interno del servidor.' });
+    console.error(error);
+    res.status(500).json({ error: 'Error al obtener el registro de Redis' });
   }
 });
 
-app.get('/command/:clave', (req, res) => {
-    const clave = req.params.clave.toString();
-    const valor =  storage.getItem(clave).then(valor => { 
-        if (valor === undefined) {
-          return res.status(404).json({ error: 'Objeto no encontrado.' });
-        }
-        return res.status(200).json({ clave, valor });
-    });
-  });
+app.post('/command', async (req, res) => {
+  const { user_id, order, command } = req.body;
+  
+  if (!user_id || !order || !command) {
+    return res.status(400).json({ error: 'Se requieren las propiedades "user_id", "order" y  "command" en el cuerpo de la solicitud.' });
+  }
 
-  app.get('/commands/unprocessed', (req, res) => {
-    let valores = []
-    storage.values().then(valor => { 
-        valores.push(valor)
-    }).then(d => {
-      valores_ordenados = valores.sort((a, b) => a.id - b.id);
-      return res.status(200).json({ "commands": valores_ordenados });
-    }).then(d => {storage.clear()})
-  });
+  try {
+    redis.zadd(user_id, order, command);
+    redis.expire(user_id, REDIS_TTL);
+    res.json({ message: `Registro agregado exitosamente. La lista de comandos expirará en ${REDIS_TTL} segundos` });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Error al agregar el registro a Redis' });
+  }
+});
 
-  app.delete('/command/:clave', (req, res) => {
-    const clave = req.params.clave;
-    
-    storage.keys().then(keys =>{
-      let existeClave = keys.includes(clave)
-      if (existeClave) {
-        storage.removeItem(clave);
-        res.send(`Elemento con clave ${clave} eliminado.`);
-      } else {
-        res.status(404).send(`Elemento con clave ${clave} no encontrado.`);
-      }
-    })
-  })
+app.delete('/commands/:user_id', (req, res) => {
+  const user_id = req.params.user_id;
+  redis.del(user_id);
+  res.send(`Elemento con clave ${user_id} eliminado correctamente.`);
+})
 
-  app.delete('/commands/clear', (req, res) => {
-    storage.clear();
-    res.send('Todos los elementos eliminados.')
-  })
-
-
-// Inicia el servidor
-app.listen(PORT, '0.0.0.0', () => {
-  console.log(`Servidor escuchando en http://localhost:${PORT}`);
+// Iniciar el servidor
+app.listen(PORT, () => {
+  console.log(`Servidor escuchando en el puerto ${PORT}`);
 });
