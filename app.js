@@ -1,7 +1,8 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const routerApi = require('./routes');
 const cors = require('cors');
+const routerApi = require('./routes');
+
 const { logErrors, errorHandler, boomErrorHandler} = require('./middlewares/error.handler');
 
 const app = express();
@@ -20,7 +21,7 @@ const options = {
   }
 }
 app.use(cors(options));
-
+require('./utils/auth');
 routerApi(app);
 app.use(logErrors);
 app.use(boomErrorHandler);

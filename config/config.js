@@ -7,7 +7,9 @@ const config = {
   redisPassword: process.env.REDIS_PASSWORD,
   redisHost: process.env.REDIS_HOST,
   redisPort: process.env.REDIS_PORT,
-  dbUrl: process.env.DATABASE_URL
+  dbUrl: process.env.DATABASE_URL,
+  apiKey: process.env.API_KEY,
+  jwtSecret: process.env.JWT_SECRET
 }
 
 
