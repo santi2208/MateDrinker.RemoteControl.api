@@ -8,6 +8,7 @@ const config = {
   redisHost: process.env.REDIS_HOST,
   redisPort: process.env.REDIS_PORT,
   localDbUrl: process.env.LOCAL_DATABASE_URL,
+  remoteDbUrl: process.env.REMOTE_DATABASE_URL,
   dbUser: process.env.DB_USER,
   dbPassword: process.env.DB_PASSWORD,
   dbHost: process.env.DB_HOST,

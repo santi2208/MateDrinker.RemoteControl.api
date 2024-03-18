@@ -3,6 +3,7 @@ const { Sequelize } = require('sequelize');
 const { config } = require('./../config/config');
 const setupModels = require('./../db/models');
 
+const dbUrl = config.isProd ? config.remoteDbUrl : config.localDbUrl;
 const options = {
   dialect: 'mysql',
   logging: config.isProd ? false : true,
@@ -16,7 +17,7 @@ if (config.isProd) {
   }
 }
 
-const sequelize = new Sequelize(config.dbUrl, options);
+const sequelize = new Sequelize(dbUrl, options);
 
 setupModels(sequelize);
 
