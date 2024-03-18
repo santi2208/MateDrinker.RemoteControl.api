@@ -22,7 +22,7 @@
     "start": "node app.js",
     "dev": "nodemon app.js",
     "migrations:generate": "sequelize-cli migration:generate --name",
-    "migrations:run": "npx sequelize-cli db:migrate",
+    "migrations:run": "npx sequelize-cli db:migrate --config .\\db\\config\\config.json --migrations-path .\\db\\migrations\\ --env",
     "migrations:revert": "sequelize-cli db:migrate:undo",
     "migrations:delete": "sequelize-cli db:migrate:undo:all"
   }
