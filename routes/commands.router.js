@@ -41,6 +41,7 @@ router.post('/',
     async (req, res, next) => {
         try {
             const body = req.body;
+            body.user_id = req.user.sub;
             service.create(body).then((result) => {
                 res.status(201).json(result);
             });
