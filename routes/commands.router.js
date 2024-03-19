@@ -9,9 +9,9 @@ const passport = require('passport');
 const router = express.Router();
 const service = new CommandsService();
 
-
 router.get('/:user_id',
     passport.authenticate('jwt', {session:false}),
+    checkRoles('admin'),
     validatorHandler(queryCommandsSchema, 'params'),
     async (req, res, next) => {
         try {
@@ -22,8 +22,21 @@ router.get('/:user_id',
         }
     });
 
+
+router.get('/',
+    passport.authenticate('jwt', { session: false }),
+    // validatorHandler(queryCommandsSchema, 'params'),
+    async (req, res, next) => {
+        try {
+            const key = req.user.sub;
+            service.find(key).then((commands) => res.json(commands));
+        } catch (error) {
+            next(error);
+        }
+    });
+
 router.post('/',
-    passport.authenticate('jwt', {session:false}),
+    passport.authenticate('jwt', { session: false }),
     validatorHandler(createCommandSchema, 'body'),
     async (req, res, next) => {
         try {
@@ -37,7 +50,7 @@ router.post('/',
     });
 
 router.delete('/:user_id',
-    passport.authenticate('jwt', {session:false}),
+    passport.authenticate('jwt', { session: false }),
     checkRoles('admin'),
     validatorHandler(queryCommandsSchema, 'params'),
     async (req, res, next) => {
