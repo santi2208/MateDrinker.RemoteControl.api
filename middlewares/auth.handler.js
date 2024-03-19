@@ -4,8 +4,6 @@ const { config } = require('../config/config');
 function checkRoles(...roles) {
     return (req, res, next) => {
         const user = req.user;
-        console.log(user);
-        console.log(roles);
         if (roles.includes(user.role)) {
             next();
         } else {
