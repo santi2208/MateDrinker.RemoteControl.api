@@ -5,6 +5,9 @@ const email = Joi.string().email();
 const password = Joi.string().min(8);
 const role = Joi.string().min(5);
 
+const limit = Joi.number().integer();
+const offset = Joi.number().integer();
+
 const createUserSchema = Joi.object({
   email: email.required(),
   password: password.required(),
@@ -20,4 +23,13 @@ const getUserSchema = Joi.object({
   id: id.required(),
 });
 
-module.exports = { createUserSchema, updateUserSchema, getUserSchema }
+const queryUserSchema = Joi.object({
+  email,
+  limit: Joi.when('offset', {
+    is: Joi.exist(),
+    then: limit.required()
+  }),
+  offset,
+});
+
+module.exports = { createUserSchema, updateUserSchema, getUserSchema, queryUserSchema }

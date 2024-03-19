@@ -15,8 +15,24 @@ class UserService {
     return newUser;
   }
 
-  async find() {
-    const rta = await models.User.findAll();
+  async find(query) {
+    
+    const options = {
+      where: {}
+    }
+    const { limit, offset } = query;
+    
+    if (limit) {
+      options.limit = parseInt(limit);
+      options.offset =  offset? parseInt(offset) : 0;
+    }
+
+    const { email } = query;
+    if (email) {
+      options.where.email = email;
+    }
+
+    const rta = await models.User.findAll(options);
     return rta;
   }
 

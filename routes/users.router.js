@@ -2,16 +2,19 @@ const express = require('express');
 
 const UserService = require('./../services/user.service');
 const validatorHandler = require('./../middlewares/validator.handler');
-const { updateUserSchema, createUserSchema, getUserSchema } = require('./../schemas/user.schema');
+const { updateUserSchema, createUserSchema, getUserSchema, queryUserSchema } = require('./../schemas/user.schema');
 const { checkRoles } = require('./../middlewares/auth.handler');
 const passport = require('passport');
 
 const router = express.Router();
 const service = new UserService();
 
-router.get('/', async (req, res, next) => {
+router.get('/', 
+validatorHandler(queryUserSchema, 'query'),
+async (req, res, next) => {
   try {
-    const users = await service.find();
+    
+    const users = await service.find(req.query);
     res.json(users);
   } catch (error) {
     next(error);
