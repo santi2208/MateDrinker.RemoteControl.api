@@ -10,6 +10,8 @@ const router = express.Router();
 const service = new UserService();
 
 router.get('/', 
+passport.authenticate('jwt', {session:false}),
+checkRoles('admin'),
 validatorHandler(queryUserSchema, 'query'),
 async (req, res, next) => {
   try {
@@ -22,6 +24,8 @@ async (req, res, next) => {
 });
 
 router.get('/:id',
+  passport.authenticate('jwt', {session:false}),
+  checkRoles('admin'),
   validatorHandler(getUserSchema, 'params'),
   async (req, res, next) => {
     try {

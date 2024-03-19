@@ -32,8 +32,11 @@ class UserService {
       options.where.email = email;
     }
 
-    const rta = await models.User.findAll(options);
-    return rta;
+    const users = await models.User.findAll(options);
+    users.forEach(user => {
+      delete user.dataValues.password;
+    });
+    return users;
   }
 
   async findByEmail(email) {
@@ -48,6 +51,7 @@ class UserService {
     if (!user) {
       throw boom.notFound('user not found');
     }
+    delete user.dataValues.password;
     return user;
   }
 
