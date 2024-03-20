@@ -30,8 +30,8 @@ router.get('/:id',
   async (req, res, next) => {
     try {
       const { id } = req.params;
-      const category = await service.findOne(id);
-      res.json(category);
+      const user = await service.findOne(id);
+      res.json(user);
     } catch (error) {
       next(error);
     }
@@ -58,8 +58,8 @@ router.patch('/:id',
     try {
       const { id } = req.params;
       const body = req.body;
-      const category = await service.update(id, body);
-      res.json(category);
+      const updatedUser = await service.update(id, body);
+      res.status(200).json(updatedUser);
     } catch (error) {
       next(error);
     }
@@ -74,7 +74,7 @@ router.delete('/:id',
     try {
       const { id } = req.params;
       await service.delete(id);
-      res.status(201).json({id});
+      res.status(204).json({id});
     } catch (error) {
       next(error);
     }
