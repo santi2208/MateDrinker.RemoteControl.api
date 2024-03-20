@@ -10,7 +10,6 @@ const queryCommandsSchema = Joi.object({
 });
 
 const createCommandSchema = Joi.object({
-    user_id: user_id.required(),
     command: command.required(),
     order: order.required(),
 });

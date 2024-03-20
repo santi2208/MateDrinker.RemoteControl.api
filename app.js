@@ -2,8 +2,8 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const routerApi = require('./routes');
-
-const { logErrors, errorHandler, boomErrorHandler} = require('./middlewares/error.handler');
+const { logErrors, errorHandler, boomErrorHandler } = require('./middlewares/error.handler');
+const { swaggerDocs: v1SwaggerDocs } = require("./utils/swagger/swagger")
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -32,4 +32,5 @@ app.use(bodyParser.json());
 
 app.listen(PORT, () => {
   console.log(`Servidor escuchando en el puerto ${PORT}`);
+  v1SwaggerDocs(app, PORT);
 });
