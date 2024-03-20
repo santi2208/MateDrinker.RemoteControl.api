@@ -22,10 +22,10 @@
 //-------------------ENDPOINTS-------------------//
 /**
  * @swagger
- * /api/v1/commands/:
+ * /api/v1/commands/{user_id}:
  *   get:
  *     summary: Obtiene comandos no procesados
- *     description: Obtiene todos los comandos para el usuario autenticado. Borra los comandos leídos
+ *     description: Obtiene todos los comandos para un usuario. Borra los comandos leídos. Es necesario ser admin.
  *     tags:
  *       - Commands
  *     security:
@@ -47,7 +47,30 @@
  *               type: array
  *               items:
  *                 type: string
- *                 example: 0_BACK, 1_BACK, 2_LEFT
+ *                 example: 0_BACK
+ *                 description: Cadena de texto
+ */
+
+/**
+ * @swagger
+ * /api/v1/commands/:
+ *   get:
+ *     summary: Obtiene comandos no procesados
+ *     description: Obtiene todos los comandos para el usuario autenticado. Borra los comandos leídos
+ *     tags:
+ *       - Commands
+ *     security:
+ *       - JWT: []
+ *     responses:
+ *       '200':
+ *         description: OK. Usuario
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: string
+ *                 example: 0_BACK
  *                 description: Cadena de texto
  */
 
@@ -56,7 +79,7 @@
  * /api/v1/commands/:
  *   post:
  *     summary: Crea un comando
- *     description: Crea un comando para el usuario logeado. Para repetir comandos iguales se debe concatenar el ORDER al principio
+ *     description: Crea un comando para el usuario autenticado. Para repetir comandos iguales se debe concatenar el ORDER al principio
  *     tags:
  *       - Commands
  *     security:

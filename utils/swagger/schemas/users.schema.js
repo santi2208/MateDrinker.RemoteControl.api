@@ -172,7 +172,7 @@
  *              $ref: "#/components/schemas/UpdateUserRequest" 
  *     responses:
  *       '200':
- *         description: Usuario creado correctamente.
+ *         description: Usuario actualizado correctamente.
  *         content:
  *           application/json:
  *             schema:
@@ -197,7 +197,7 @@
  *         description: Id del usuario
  *     responses:
  *       '204':
- *         description: Usuario creado correctamente.
+ *         description: Usuario eliminado correctamente.
  */
 
 //-------------------END ENDPOINTS-------------------//
