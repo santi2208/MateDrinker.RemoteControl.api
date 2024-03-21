@@ -1,9 +1,9 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const routerApi = require('./routes');
-const { logErrors, errorHandler, boomErrorHandler } = require('./middlewares/error.handler');
-const { swaggerDocs: v1SwaggerDocs } = require("./utils/swagger/swagger")
+const routerApi = require('../routes');
+const { logErrors, errorHandler, boomErrorHandler } = require('../middlewares/error.handler');
+const { swaggerDocs: v1SwaggerDocs } = require("../utils/swagger/swagger")
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -21,7 +21,7 @@ const options = {
   }
 }
 app.use(cors(options));
-require('./utils/auth');
+require('../utils/auth');
 routerApi(app);
 app.use(logErrors);
 app.use(boomErrorHandler);

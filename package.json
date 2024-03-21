@@ -21,8 +21,8 @@
     "nodemon": "^3.1.0"
   },
   "scripts": {
-    "start": "node app.js",
-    "dev": "nodemon app.js",
+    "start": "node ./api/index.js",
+    "dev": "nodemon ./api/index.js",
     "migrations:generate": "sequelize-cli migration:generate --name",
     "migrations:run": "npx sequelize-cli db:migrate --config .\\db\\config.js --migrations-path .\\db\\migrations\\ --env",
     "migrations:revert": "sequelize-cli db:migrate:undo",
