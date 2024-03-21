@@ -10,59 +10,67 @@ const router = express.Router();
 const service = new CommandsService();
 
 router.get('/:user_id',
-    passport.authenticate('jwt', {session:false}),
+    passport.authenticate('jwt', { session: false }),
     checkRoles('admin'),
     validatorHandler(queryCommandsSchema, 'params'),
-    async (req, res, next) => {
-        try {
-            const key = req.params.user_id;
-            service.find(key).then((commands) => res.json(commands));
-        } catch (error) {
-            next(error);
-        }
-    });
+    getUnprocessedCommandsByUserId);
 
 
 router.get('/',
     passport.authenticate('jwt', { session: false }),
     // validatorHandler(queryCommandsSchema, 'params'),
-    async (req, res, next) => {
-        try {
-            const key = req.user.sub;
-            service.find(key).then((commands) => res.json(commands));
-        } catch (error) {
-            next(error);
-        }
-    });
+    getUnprocessedCommandsByAutenticatedUser);
 
 router.post('/',
     passport.authenticate('jwt', { session: false }),
     validatorHandler(createCommandSchema, 'body'),
-    async (req, res, next) => {
-        try {
-            const body = req.body;
-            body.user_id = req.user.sub;
-            service.create(body).then((result) => {
-                res.status(201).json(result);
-            });
-        } catch (error) {
-            next(error);
-        }
-    });
+    createCommand);
 
 router.delete('/:user_id',
     passport.authenticate('jwt', { session: false }),
     checkRoles('admin'),
     validatorHandler(queryCommandsSchema, 'params'),
-    async (req, res, next) => {
-        try {
-            const user_id = req.params.user_id;
-            service.delete(user_id).then((result) => {
-                res.status(204).json(result);
-            });
-        } catch (error) {
-            next(error);
-        }
-    });
+    deleteCommandsByAutenticatedUser);
+
+async function getUnprocessedCommandsByUserId(req, res, next) {
+    try {
+        const key = req.params.user_id;
+        service.find(key).then((commands) => res.json(commands));
+    } catch (error) {
+        next(error);
+    }
+}
+
+async function getUnprocessedCommandsByAutenticatedUser(req, res, next) {
+    try {
+        const key = req.user.sub;
+        service.find(key).then((commands) => res.json(commands));
+    } catch (error) {
+        next(error);
+    }
+}
+
+async function createCommand(req, res, next) {
+    try {
+        const body = req.body;
+        body.user_id = req.user.sub;
+        service.create(body).then((result) => {
+            res.status(201).json(result);
+        });
+    } catch (error) {
+        next(error);
+    }
+}
+
+async function deleteCommandsByAutenticatedUser(req, res, next) {
+    try {
+        const user_id = req.params.user_id;
+        service.delete(user_id).then((result) => {
+            res.status(204).json(result);
+        });
+    } catch (error) {
+        next(error);
+    }
+}
 
 module.exports = router;
