@@ -1,15 +1,15 @@
 const Redis = require('ioredis');
 const boom = require('@hapi/boom');
-const { config } = require('./../config/config');
+const { config } = require('../../../../config/config');
 const REDIS_TTL = 100;
 let redis = null;
 
 class CommandsService {
     constructor() {
         redis = new Redis({
-            host: config.redisHost,
-            port: config.redisPort,
-            password: config.redisPassword
+            host: config.redis.host,
+            port: config.redis.port,
+            password: config.redis.password
         })
     }
     

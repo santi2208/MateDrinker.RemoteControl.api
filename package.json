@@ -22,7 +22,8 @@
   },
   "scripts": {
     "start": "node ./api/index.js",
-    "dev": "nodemon ./api/index.js",
+    "dev": "nodemon ./apis/main/index.js",
+    "dev-commands": "nodemon ./apis/commands/index-commands.js",
     "migrations:generate": "sequelize-cli migration:generate --name",
     "migrations:run": "npx sequelize-cli db:migrate --config .\\db\\config.js --migrations-path .\\db\\migrations\\ --env",
     "migrations:revert": "sequelize-cli db:migrate:undo",

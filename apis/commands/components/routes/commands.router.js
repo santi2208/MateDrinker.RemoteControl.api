@@ -1,20 +1,20 @@
 const express = require('express');
-const CommandsService = require('./../services/command.service');
-const validatorHandler = require('./../middlewares/validator.handler');
-const { createCommandSchema, queryCommandsSchema } = require('./../schemas/command.schema');
-const { checkRoles } = require('./../middlewares/auth.handler');
-const passport = require('passport');
-// const jwt = require('jsonwebtoken');
+const CommandsService = require('../services/command.service');
+const validatorHandler = require('../../../../middlewares/validator.handler');
+const { createCommandSchema, queryCommandsSchema } = require('../../../../schemas/command.schema');
+const { checkRoles } = require('../../../../middlewares/auth.handler');
 
+const passport = require('passport');
 const router = express.Router();
 const service = new CommandsService();
+
+router.use('/api/v1', router);
 
 router.get('/:user_id',
     passport.authenticate('jwt', { session: false }),
     checkRoles('admin'),
     validatorHandler(queryCommandsSchema, 'params'),
     getUnprocessedCommandsByUserId);
-
 
 router.get('/',
     passport.authenticate('jwt', { session: false }),
