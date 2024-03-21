@@ -1,22 +1,5 @@
 require('dotenv').config();
 
-const config_ = {
-  env: process.env.NODE_ENV || 'dev',
-  isProd: process.env.NODE_ENV === 'production',
-  port: process.env.PORT || 3000,
-  redisPassword: process.env.REDIS_PASSWORD,
-  redisHost: process.env.REDIS_HOST,
-  redisPort: process.env.REDIS_PORT,
-  dbUrl: process.env.DATABASE_URL,
-  dbUser: process.env.DB_USER,
-  dbPassword: process.env.DB_PASSWORD,
-  dbHost: process.env.DB_HOST,
-  dbName: process.env.DB_NAME,
-  dbPort: process.env.DB_PORT,
-  apiKey: process.env.API_KEY,
-  jwtSecret: process.env.JWT_SECRET,
-}
-
 const config = {
   apis: {
     main: {
@@ -47,6 +30,5 @@ const config = {
     isProd: process.env.NODE_ENV === 'production',    
   }
 }
-
 
 module.exports = { config };
