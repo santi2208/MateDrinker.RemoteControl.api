@@ -5,10 +5,10 @@ const setupModels = require('./../db/models');
 
 const options = {
   dialect: 'mysql',
-  logging: config.isProd ? false : true,
+  logging: config.secuelize.isProd ? false : true,
 }
 
-if (config.isProd) {
+if (config.secuelize.isProd) {
   options.dialectOptions = {
     ssl: {
       rejectUnauthorized: false
@@ -16,7 +16,7 @@ if (config.isProd) {
   }
 }
 
-const sequelize = new Sequelize(config.dbUrl, options);
+const sequelize = new Sequelize(config.mysql.url, options);
 
 setupModels(sequelize);
 
