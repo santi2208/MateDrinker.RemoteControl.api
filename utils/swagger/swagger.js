@@ -8,17 +8,12 @@ const options = {
             title: "Mate Remote Control Api",
             version: "1.0..0"
         }
-    },
-    apis: [
-        "./utils/swagger/schemas/commands.schema.js"
-        , "./utils/swagger/schemas/users.schema.js"
-        , "./utils/swagger/schemas/auth.schema.js"
-    ]
+    }
 }
 
-const swaggerSpec = swaggerJSDoc(options);
-
-const swaggerDocs = (app, port) => {
+const swaggerDocs = (app, port, apis) => {
+    options.apis = apis;
+    const swaggerSpec = swaggerJSDoc(options);
     app.use("/api/v1/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
     app.use("/api/v1/docs.json", (req, res) => {
         res.setHeader("Content-Type", "application/json");
