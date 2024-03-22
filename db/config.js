@@ -2,19 +2,19 @@ const { config } = require('./../config/config');
 
 module.exports = {
   development: {
-    url: config.dbUrl,
+    url: config.mysql.url,
     dialect: 'mysql',
   },
   remote: {
-    username: config.dbUser,
-    password: config.dbPassword,
-    database: config.dbName,
-    host: config.dbHost,
-    port: config.dbPort,
+    username: config.mysql.user,
+    password: config.mysql.password,
+    database: config.mysql.name,
+    host: config.mysql.host,
+    port: config.mysql.port,
     dialect: 'mysql'
   },
   production: {
-    url: config.dbUrl,
+    url: config.mysql.url,
     dialect: 'mysql',
     dialectOptions: {
       ssl: {

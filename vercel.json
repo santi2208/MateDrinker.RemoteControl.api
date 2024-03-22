@@ -1,0 +1,27 @@
+{
+    "version": 2,
+    "builds": [
+        {
+            "src": "apis/main/index.js",
+            "use": "@vercel/node"
+        },
+        {
+            "src": "apis/commands/index-commands.js",
+            "use": "@vercel/node"
+        }
+    ],
+    "routes": [
+        {
+            "src": "/api/v1/auth(.*)",
+            "dest": "/apis/main/index.js"
+        },
+        {
+            "src": "/api/v1/user(.*)",
+            "dest": "/apis/main/index.js"
+        },
+        {
+            "src": "/api/v1/commands(.*)",
+            "dest": "/apis/commands/index-commands.js"
+        }
+    ]
+}
