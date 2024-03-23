@@ -1,1 +1,27 @@
-{ "version": 2, "rewrites": [{ "source": "/(.*)", "destination": "/api" }] }
+{
+    "version": 2,
+    "builds": [
+        {
+            "src": "src/api/auth-user/pm2/index.js",
+            "use": "@vercel/node"
+        },
+        {
+            "src": "src/api/commands/pm2/index-commands.js",
+            "use": "@vercel/node"
+        }
+    ],
+    "routes": [
+        {
+            "src": "/api/v1/login(.*)",
+            "dest": "/src/api/auth-user/pm2/index.js"
+        },
+        {
+            "src": "/api/v1/users(.*)",
+            "dest": "/src/api/auth-user/pm2/index.js"
+        },
+        {
+            "src": "/api/v1/commands(.*)",
+            "dest": "src/api/commands/pm2/index-commands.js"
+        }
+    ]
+}

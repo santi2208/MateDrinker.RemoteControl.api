@@ -147,3 +147,4 @@ dist
 mysql_data
 
 .vscode
+.vercel
