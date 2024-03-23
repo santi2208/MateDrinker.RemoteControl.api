@@ -21,7 +21,7 @@
         },
         {
             "src": "/api/v1/commands(.*)",
-            "dest": "src/api/commands/pm2/index-commands.js"
+            "dest": "/src/api/commands/pm2/index-commands.js"
         }
     ]
 }
