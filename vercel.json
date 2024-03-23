@@ -2,26 +2,26 @@
     "version": 2,
     "builds": [
         {
-            "src": "apis/main/index.js",
+            "src": "src/api/auth-user/index.js",
             "use": "@vercel/node"
         },
         {
-            "src": "apis/commands/index-commands.js",
+            "src": "src/api/commands/index-commands.js",
             "use": "@vercel/node"
         }
     ],
     "routes": [
         {
             "src": "/api/v1/login(.*)",
-            "dest": "/apis/main/index.js"
+            "dest": "/src/api/auth-user/index.js"
         },
         {
             "src": "/api/v1/users(.*)",
-            "dest": "/apis/main/index.js"
+            "dest": "/src/api/auth-user/index.js"
         },
         {
             "src": "/api/v1/commands(.*)",
-            "dest": "/apis/commands/index-commands.js"
+            "dest": "src/api/commands/index-commands.js"
         }
     ]
 }

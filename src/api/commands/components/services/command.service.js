@@ -1,6 +1,6 @@
 const Redis = require('ioredis');
 const boom = require('@hapi/boom');
-const { config } = require('../../../../config/config');
+const { config } = require('../../../../../config/config');
 const REDIS_TTL = 100;
 let redis = null;
 

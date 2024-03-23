@@ -1,8 +1,8 @@
 const express = require('express');
 const CommandsService = require('../services/command.service');
-const validatorHandler = require('../../../../middlewares/validator.handler');
-const { createCommandSchema, queryCommandsSchema } = require('../../../../schemas/command.schema');
-const { checkRoles } = require('../../../../middlewares/auth.handler');
+const validatorHandler = require('../../../../../middlewares/validator.handler');
+const { createCommandSchema, queryCommandsSchema } = require('../../../../../schemas/command.schema');
+const { checkRoles } = require('../../../../../middlewares/auth.handler');
 
 const passport = require('passport');
 const router = express.Router();

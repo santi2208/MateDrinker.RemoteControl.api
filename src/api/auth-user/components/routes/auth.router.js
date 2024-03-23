@@ -3,7 +3,7 @@ const passport = require('passport');
 const router = express.Router();
 const jwt = require('jsonwebtoken');
 
-const { config } = require('../../../../config/config')
+const { config } = require('../../../../../config/config')
 
 router.post('/login',
     passport.authenticate('local', { session: false }),

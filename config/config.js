@@ -26,8 +26,19 @@ const config = {
     apiKey: process.env.API_KEY,
     jwtSecret: process.env.JWT_SECRET,
   },
-  secuelize:{
-    isProd: process.env.NODE_ENV === 'production',    
+  secuelize: {
+    isProd: process.env.NODE_ENV === 'production',
+  },
+  swagger: {
+    authUser: {
+      apis: [
+        , "./src/api/auth-user/utils/swagger/users.schema.js"
+        , "./src/api/auth-user/utils/swagger/auth.schema.js"
+      ]
+    },
+    commands: {
+      apis: ["./src/api/commands/utils/swagger/commands.schema.js"]
+    }
   }
 }
 

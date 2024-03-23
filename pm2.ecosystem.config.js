@@ -1,9 +1,9 @@
 module.exports = {
     apps : [{
       name   : "user-auth",
-      script : "./apis/main/index.js"
+      script : "./src/api/auth-user/pm2/index.js"
     },{
       name   : "commands",
-      script : "./apis/commands/index-commands.js"
+      script : "./src/api/commands/pm2/index.js"
     }]
   }

@@ -2,13 +2,10 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const routerApi = require('./components/routes/index');
-const { logErrors, errorHandler, boomErrorHandler } = require('../../middlewares/error.handler');
-const { swaggerDocs: v1SwaggerDocs } = require("../../utils/swagger/swagger")
-const { config } = require('../../config/config')
+const { logErrors, errorHandler, boomErrorHandler } = require('../../../middlewares/error.handler');
 
 const app = express();
-const PORT = config.apis.commands.port;
-// const PORT = process.env.PORT || 3001;
+
 app.use(express.json());
 
 const whitelist = ['http://localhost:8080', 'https://myapp.co'];
@@ -24,7 +21,7 @@ const options = {
 }
 
 app.use(cors(options));
-require('../../utils/auth');
+require('../../../utils/auth');
 
 routerApi(app);
 
@@ -34,8 +31,4 @@ app.use(errorHandler);
 
 app.use(bodyParser.json());
 
-app.listen(PORT, () => {
-    console.log(`Servidor escuchando en el puerto ${PORT}`);
-    const apis = ["./apis/commands/utils/swagger/commands.schema.js"];
-    v1SwaggerDocs(app, PORT, apis);
-});
+module.exports = app;
