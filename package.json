@@ -21,9 +21,10 @@
     "nodemon": "^3.1.0"
   },
   "scripts": {
-    "start": "node ./src/api/index.js",
-    "dev": "nodemon ./src/api/index.js",
+    "start": "node ./index.js",
+    "dev": "nodemon ./index.js",
     "pm2-start": "pm2 start ./pm2.ecosystem.config.js",
+    "pm2-stop-all": "pm2 stop all",
     "migrations:generate": "sequelize-cli migration:generate --name",
     "migrations:run": "npx sequelize-cli db:migrate --config .\\db\\config.js --migrations-path .\\db\\migrations\\ --env",
     "migrations:revert": "sequelize-cli db:migrate:undo",
