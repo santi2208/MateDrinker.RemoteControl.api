@@ -27,6 +27,7 @@
     "migrations:generate": "sequelize-cli migration:generate --name",
     "migrations:run": "npx sequelize-cli db:migrate --config .\\db\\config.js --migrations-path .\\db\\migrations\\ --env",
     "migrations:revert": "sequelize-cli db:migrate:undo",
-    "migrations:delete": "sequelize-cli db:migrate:undo:all"
+    "migrations:delete": "sequelize-cli db:migrate:undo:all",
+    "vercel-build":"echo hello"
   }
 }
